@@ -1,0 +1,12 @@
+{% import "macro.jinja2" as macro %}
+
+<form action="" method="post">
+    {{ macro.formhead(form) }}
+    {{ macro.formfield(form.email) }}
+    <br/>
+    {{ macro.formfield(form.phone) }}
+    <br/>
+    {{ macro.formfield(form.password) }}
+
+    <input type="submit"/>
+</form>

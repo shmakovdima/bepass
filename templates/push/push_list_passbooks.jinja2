@@ -1,0 +1,126 @@
+{% extends "base.jinja2" %}
+{% from "macro.jinja2" import page_limit, paginator %}
+
+{% block title %}
+    {{ _("push notifications")|capitalize }}
+{% endblock title %}
+
+
+{% block content %}
+    <div class="come_back var2">
+        <div class="item_on_page">
+            <div style="font-size: 12px; font-family: Fira Sans; color: rgba(96, 106, 113, 0.901961); margin-bottom: 8px;">
+                Выберите карты пользователей, которым необходимо послать
+                пуш-уведомления. Введите текст уведомления и нажмите кнопку
+                "Отправить".
+            </div>
+            <div class="card_item"
+                 style="background-color:{{ template.background_color }}">
+                <span>
+                    {{ template.primary_field|default('&nbsp;', 1) }}
+                </span>
+                <img src="/static/css/img/strich.png" alt="Штрих-код">
+            </div>
+            <div class="lefted">
+                <textarea maxlength="160" class="normal push_text"
+                          style="width: 869px; min-height: 84px;"
+                          id="message"
+                          placeholder="Введите текст уведомления не более 160 символов."></textarea>
+            </div>
+            <div>
+                <button class="colored step2 next_button push_button"
+                        style="margin: 20px 0">Отправить
+                </button>
+            </div>
+        </div>
+    </div>
+    {{ page_limit() }}
+
+    <table class="tablesorter">
+        <thead>
+        <tr class="head_table">
+            <th class="header_table-start"><span
+                    class="table_icon"></span><span
+                    class="triangle_table"></span></th>
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Отчество</th>
+            <th>Номер карты</th>
+            <th>Телефон</th>
+            <th>E-mail</th>
+            <th>Пометки</th>
+        </tr>
+        </thead>
+        <tbody id="passbooks_list">
+        {% for passbook in passbooks %}
+            <tr>
+                <td>
+                    <input type="checkbox" value="{{ passbook.id }}">
+                    <span class="checkes"></span>
+                </td>
+                <td>
+                    {{ passbook.last_name }}
+                </td>
+                <td>
+                    {{ passbook.first_name }}
+                </td>
+                <td>
+                    {{ passbook.father_name }}
+                </td>
+                <td>
+                    {{ passbook.barcode_message }}
+                </td>
+                <td>
+                    {{ passbook.phone }}
+                </td>
+                <td>
+                    {{ passbook.email }}
+                </td>
+                <td>
+                    {{ passbook.comment }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {{ paginator() }}
+    <script>
+        var checked_ids = function () {
+            var ids = [];
+            $('#passbooks_list').find('input[type=checkbox]').each(function () {
+                var val = $(this).val();
+                if ($(this).is(':checked')) {
+                    ids.push(val)
+                }
+            });
+            return ids;
+        };
+
+        var send_push = function(){
+            var ids = checked_ids();
+            var message = $('#message').val();
+            var target;
+            if (ids.length > 0){
+                target = 'passbook'
+            } else {
+{#                target = 'template';#}
+{#                ids = ['{{ template.id }}'];#}
+            }
+            $.post(
+                    '{{ url_for('push_send') }}' + target + '/',
+                    {
+                        'target_ids': ids,
+                        'message': message,
+                        '_csrf_token': '{{ csrf_token() }}'
+                    },
+                    function(){
+                        sweetAlert(
+                                "Успешно",
+                                "Уведомления отправленны",
+                                "success"
+                        );
+                    }
+            )
+        };
+    </script>
+{% endblock %}

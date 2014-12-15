@@ -1,0 +1,125 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+    <meta http-equiv="Cache-Control" content="no-cache"/>
+    <link href='http://fonts.googleapis.com/css?family=Fira+Sans:300,400,500,700,300italic,400italic,500italic,700italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,600,300,700,800&subset=latin,cyrillic-ext,latin-ext,cyrillic,greek-ext,greek,vietnamese' rel='stylesheet' type='text/css'>
+	<style>
+		@font-face {
+			font-family: Header; /* Имя шрифта */
+			src: url(fonts/header.ttf); /* Путь к файлу со шрифтом */
+		}
+		html, body {
+			margin: 0;
+			padding: 0;
+			border: 0;
+			font-family: Header;
+		}
+		html {
+			background-color: #191b1f;
+		}
+		.container {
+			width: 1000px;
+			height: 100%;
+			margin: auto;
+			position: relative;
+		}
+		.login_logo {
+			position: absolute;
+			top: 20px; left: 0;
+			background: url('img/logo_big.png') center center no-repeat;
+			width: 160px;
+			height: 97px;
+			background-size: 100% 100%;
+		}
+		.login_wrapper {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-top: -175px;
+			margin-left: -150px;
+			width: 300px; height: 350px;
+			overflow: auto;
+			text-align: center;
+		}
+		.login_wrapper h1 {
+			font-size: 24px;
+			color: #ffffff;
+			margin-bottom: 20px;
+			font-weight: normal;
+		}
+		.login_wrapper h2 {
+			font-size: 12px;
+			color: #76787c;
+			font-weight: normal;
+			margin-bottom: 25px;
+			font-family: 'Open Sans';
+		}
+		.login_wrapper input {
+			width: 100%;
+			height: 40px; line-height: 40px;
+			padding-left: 35px;
+			background-repeat: no-repeat;
+			background-position: 10px center;
+			margin-bottom: 30px;
+			border: 1px solid transparent;
+			border-radius: 8px;
+			box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+			-webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
+			-moz-transition: border linear 0.2s, box-shadow linear 0.2s;
+			-o-transition: border linear 0.2s, box-shadow linear 0.2s;
+			transition: border linear 0.2s, box-shadow linear 0.2s;
+		}
+		.login_wrapper input:focus {
+			border-color: rgba(82, 168, 236, 0.8);
+			outline: 0;
+			outline: thin dotted \9;
+			-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+			-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+			box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+			outline-offset: -2px;
+		}
+		.login_name {
+			background-image: url('img/user_input.png');
+		}
+		.login_password {
+			background-image: url('img/password_input.png');
+		}
+		.login_button {
+			margin-top: 10px;
+			background-color: #54c4eb;
+			height: 40px; line-height: 40px;
+			font-size: 15px;
+			color: #e8f7fc;
+			border: 1px solid transparent;
+			border-radius: 8px;
+			cursor: pointer;
+		}
+		.login_button:active {
+			background-color: #50c0b0;
+		}
+		.copyright {
+			position: absolute;
+			bottom: 20px;
+			left: 0; right: 0;
+			color: #333840;
+			font-size: 15px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="login_logo"></div>
+		<div class="login_wrapper">
+			<h1>Вход в аккаунт</h1>
+			<h2>Заполните поля ниже, чтобы войти в аккаунт</h2>
+			<div class="login_form">
+				<input class="login_name" name="login">
+				<input class="login_password" type="password" name="password">
+			</div>
+			<div class="login_button">Войти в аккаунт</div>
+		</div>
+		<div class="copyright">© 2012 “Мобильные-интеграции”. Все права защищены</div>
+	</div>
+</body>
+</html>

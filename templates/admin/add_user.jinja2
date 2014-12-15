@@ -1,0 +1,41 @@
+{% extends "base.jinja2" %}
+{% import "macro.jinja2" as macro %}
+
+{% block content %}
+    <div class="come_back">
+        <button data-href="{{ url_for('admin_users') }}">
+            Вернуться обратно
+        </button>
+    </div>
+
+    <form action="" method="post">
+        {{ macro.formhead(form) }}
+        {{ macro.formfield(form.first_name) }}
+        <br/>
+        {{ macro.formfield(form.last_name) }}
+        <br/>
+        {{ macro.formfield(form.father_name) }}
+        <br/>
+        {{ macro.formfield(form.company) }}
+        <br/>
+        {{ macro.formfield(form.email) }}
+        <br/>
+        {{ macro.formfield(form.phone) }}
+        <br/>
+        {{ macro.formfield(form.notes) }}
+        <br/>
+        {{ macro.formfield(form.comment) }}
+        <br/>
+        {{ macro.formfield(form.active, checkbox=1) }}
+        <br/>
+        {{ macro.formfield(form.demo, checkbox=1) }}
+        <br/>
+
+        <div class="next_step">
+            <button class="colored">
+                Добавить пользователя
+            </button>
+        </div>
+    </form>
+
+{% endblock content %}

@@ -1,0 +1,109 @@
+{% extends "base.jinja2" %}
+{% from "macro.jinja2" import formhead, formfield %}
+
+{% block title %}
+    {{ _("add client")|capitalize }}
+{% endblock title %}
+
+{% block js %}
+     <script type="text/javascript" src = "/static/js/jquery-1.8.3.ext.js"></script>
+    <script type="text/javascript" src = "/static/js/form.js"></script>
+    <script src="/static/js/jquery.maskedinput.min.js" type="text/javascript"></script>
+    <script src="/static/js/sweet-alert.min.js" type="text/javascript"></script>
+    <script src="/static/js/datepicker.js" type="text/javascript"></script>
+    <script src="/static/js/chosen.jquery.min.js"></script>
+{% endblock %}
+
+
+{% block content %}
+    <div class="come_back">
+        <button data-href="{{ url_for('clients') }}">
+            Вернуться обратно
+        </button>
+    </div>
+    <form action="./" method="post" id="client_form">
+        {{ formhead(form) }}
+
+        <div class="form_item">
+            <label class="spec_after">Фамилия</label>
+            <input type="text" class="fam" name="last_name"
+                    value="{{ client.last_name }}">
+        </div>
+        <div class="form_item">
+            <label class="spec_after">Имя</label>
+            <input type="text" class="name" name="first_name"
+                    value="{{ client.first_name }}">
+        </div>
+        <div class="form_item">
+            <label>Отчество</label>
+            <input type="text" name="father_name"
+                   value="{{ client.father_name }}">
+        </div>
+        <div class="form_item">
+            <label>Пол</label>
+            <select placeholder="Выберите свой пол" name="sex">
+                <option value="" disabled selected style="display: none;">
+                    Выберите пол
+                </option>
+                <option value="m"
+                        {% if client.sex == 'm' %}selected="selected"{% endif %}>
+                    Мужской
+                </option>
+                <option value="f"
+                        {% if client.sex == 'f' %}selected="selected"{% endif %}>
+                    Женский
+                </option>
+            </select>
+        </div>
+        <div class="form_item">
+            <label>Год рождения</label>
+            <input type="text" class="date" name="birthdate"
+                    {% if client.birthdate %}
+                        {{ client.birthdate['$date']|datetime('medium') }}
+                    {% endif %}>
+        </div>
+        <div class="form_item">
+            <label class="spec_after">Номер карты</label>
+            <input type="text" class="card" name="barcode_message"
+                    value="{{ client.barcode_message }}">
+        </div>
+        <div class="form_item">
+            <label class="spec_after">Телефон</label>
+            <input type="text" class="phone" name="phone"
+                    value="{{ client.phone }}">
+        </div>
+        <div class="form_item">
+            <label class="spec_after">E-mail</label>
+            <input type="text" class="mail" name="email"
+                    value="{{ client.email }}">
+        </div>
+        <div class="form_item">
+            <label>Комментарий</label>
+            <input type="text" name="comment" value="{{ client.comment }}">
+        </div>
+        <div class="next_step">
+            <button class="colored submit form">
+                {% if client_id %}
+                    Изменить клиента
+                {% else %}
+                    Добавить клиента
+                {% endif %}
+            </button>
+        </div>
+    </form>
+    <script>
+        jQuery('.date').datetimepicker({
+            format: 'd.m.Y',
+            lang: 'ru',
+            minDate: 0,
+            minTime: 0
+        });
+        {% if exceed %}
+            sweetAlert(
+                        "Ошибка",
+                        "Вы превысили лимит в 1000 клиентов",
+                        "error"
+                );
+        {% endif %}
+    </script>
+{% endblock content %}

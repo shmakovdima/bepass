@@ -1,0 +1,63 @@
+{% extends "base.jinja2" %}
+{% from "macro.jinja2" import formhead, formfield %}
+
+{% block title %}
+    {{ _("import clients")|capitalize }}
+{% endblock title %}
+
+{% block content %}
+
+    <div class="come_back">
+        <button data-href="{{ url_for('clients') }}">Вернуться назад</button>
+        <div style="clear: both;"></div>
+
+        <div>
+        <span style="color: rgba(96, 106, 113, 0.702); font-family: Proxima nova regular; font-weight: bold; font-size: 12px;">
+            Скачайте
+            <a href="/static/example.csv" style="color: #5dacdf;">
+                пример файла
+            </a>
+            для импорта базы.
+        </span>
+
+            <div>
+                <form action="./" method="post" enctype="multipart/form-data"
+                      id="csv_form">
+                    {{ formhead(form) }}
+                    <div class="form_item" style="position: absolute; top:
+                    -1000px">
+                        {{ formfield(form.csv_file, nolabel=1) }}
+                    </div>
+                </form>
+                <button class="colored step2 next_button" id="load_csv"
+                        style="float: left;">
+                    Загрузить csv
+                </button>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(
+                function () {
+                    var csvFile = $('#csv_file');
+                    $('#load_csv').on('click', function (e) {
+                        csvFile.click();
+                    });
+
+                    csvFile.on('change', function () {
+                        if ($(this).val().search(/.\.csv$/) > 0)
+                            $('#csv_form').submit();
+                        else
+                            alert("Должен быть файл CSV!");
+                    });
+                }
+        );
+        {% if exceed %}
+            sweetAlert(
+                                    "Ошибка",
+                                    "Вы привысили лимит в 1000 клиентов",
+                                    "error"
+                            );
+        {% endif %}
+    </script>
+{% endblock content %}

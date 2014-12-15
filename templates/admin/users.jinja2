@@ -1,0 +1,66 @@
+{% extends "base.jinja2" %}
+
+
+{% block content %}
+
+    <div class="come_back">
+        <button data-href="{{ url_for('admin_users_modify') }}">
+            Добавить пользователя
+        </button>
+    </div>
+
+    <table id="users_table">
+        <tr class="head_table">
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Отчество</th>
+            <th>Компания</th>
+            <th>Телефон</th>
+            <th>Email</th>
+            <th>Пометки</th>
+            <th>Действия</th>
+        </tr>
+        {% for user in users %}
+            <tr>
+                <td>
+                    {{ user.last_name }}
+                </td>
+                <td>
+                    {{ user.first_name }}
+                </td>
+                <td>
+                    {{ user.father_name }}
+                </td>
+                <td>
+                    {{ user.company }}
+                </td>
+                <td>
+                    {{ user.phone }}
+                </td>
+                <td>
+                    {{ user.email }}
+                </td>
+                <td>
+                    {{ user.notes }}
+                </td>
+                <td>
+                    <a href="
+                    {{ url_for('admin_users_modify', uid=user._id['$oid']) }}">
+                        Edit</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    {% if page > 1 %}
+        <a href="{{ url_for("admin_users") }}?page={{ page - 1 }}">
+            Prev page
+        </a>
+    {% endif %}
+
+    {% if total > 100 %}
+        <a href="{{ url_for("admin_users") }}?page={{ page + 1 }}">
+            Next page
+        </a>
+    {% endif %}
+{% endblock content %}

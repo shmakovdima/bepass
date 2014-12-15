@@ -1,0 +1,138 @@
+{#<span class="title">Добавить клиентов для рассылки</span>#}
+{#<div class="control_block">#}
+{#    <div class="control_left">#}
+{#        <button class="control">125<span class="header_triangle"></span>#}
+{#        </button>#}
+{#        <span class="name">Элементов на странице</span>#}
+{#    </div>#}
+{#</div>#}
+{#<table>#}
+{#    <tr class="head_table">#}
+{#        <th class="header_table-start"><span#}
+{#                class="table_icon"></span><span#}
+{#                class="triangle_table"></span></th>#}
+{#        <th>Фамилия</th>#}
+{#        <th>Имя</th>#}
+{#        <th>Отчество</th>#}
+{#        <th>Номер карты</th>#}
+{#        <th>Телефон</th>#}
+{#        <th>E-mail</th>#}
+{#        <th>Статус</th>#}
+{#    </tr>#}
+{#     {% for client in clients %}#}
+{#        <tr>#}
+{#            <td>#}
+{#                <input type="checkbox" value="">#}
+{#                <span class="checkes"></span>#}
+{#            </td>#}
+{#            <td>{{ client.last_name }}</td>#}
+{#            <td>{{ client.first_name }}</td>#}
+{#            <td>{{ client.father_name }}</td>#}
+{#            <td>{{ client.barcode_message }}</td>#}
+{#            <td>{{ client.phone }}</td>#}
+{#            <td>{{ client.email }}</td>#}
+{#            <td>#}
+{#                {% if template_id in client.templates %}#}
+{#                    <span class="status ok">Добавлен</span>#}
+{#                {% else %}#}
+{#                    <span class="status no">Не добавлен</span>#}
+{#                {% endif %}#}
+{#            </td>#}
+{#        </tr>#}
+{#    {% endfor %}#}
+{#</table>#}
+{#<div class="control_block">#}
+{#    <div class="control_center">#}
+{#        <button class="left"></button>#}
+{#        <div class="items">#}
+{#            <a href="#123" title="Страница">1</a>#}
+{#            <a href="#123" class="active" title="Страница">2</a>#}
+{#            <a href="#123" title="Страница">3</a>#}
+{#            <a href="#123" title="Страница">4</a>#}
+{#            <a href="#123" title="Страница">5</a>#}
+{#            <span>...</span>#}
+{#            <a href="#123" title="Страница">35</a>#}
+{#            <a href="#123" title="Страница">36</a>#}
+{#        </div>#}
+{#        <button class="right"></button>#}
+{#    </div>#}
+{#</div>#}
+
+<span class="title">Выберете способ рассылки</span>
+<div class="shab_wrap shab_version">
+    <span class="headline">Укажите способ и время доставки</span>
+
+    <div class="item_shab">
+        <div class="normal_item">
+            <div style="display: inline-block; vertical-align: top; width: 258px;">
+                <input type="radio" value="all" class="whom_all"
+                       name="whom" id="whom_all">
+                <span class="checkes"></span>
+                <label for="whom_all">Разослать всем</label>
+            </div>
+            <div style="display: inline-block; vertical-align: top;">
+                <input type="radio" value="new" class="whom_new"
+                       name="whom" id="whom_new">
+                <span class="checkes"></span>
+                <label for="whom_new">Разослать только новым
+                    пользователям</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="item_shab">
+        <div class="normal_item">
+            <div style="display: inline-block; vertical-align: top; width: 258px;">
+                <input type="radio" value="now" class="send_now"
+                       name="send_radio" id="send_now">
+                <span class="checkes"></span>
+                <label for="send_now">Разослать сейчас</label>
+            </div>
+            <div style="display: inline-block; vertical-align: top;">
+                <input type="radio" value="date" class="send_date"
+                       name="send_radio" id="send_date">
+                <span class="checkes"></span>
+                <label for="send_date">Разослать к дате</label>
+            </div>
+        </div>
+        <div class="date_block">
+            <input type="text" placeholder="Дата" class="date_picker date"
+                   id="date_value">
+        </div>
+    </div>
+    <div class="item_shab" style="display: inline-block; vertical-align: top;">
+        <div style="display: inline-block; vertical-align: top;">
+            <input type="checkbox" id="send_sms">
+            <span class="checkes"></span>
+            <label for="send_sms">Послать по смс</label>
+
+            <div class="item_bottom" style="margin: 0 0 0 28px;">
+                <span>Укажите текст уведомления</span>
+                <textarea class="normal sms_uv" maxlength="36"
+                          id="sms_text"></textarea>
+            </div>
+        </div>
+        <div style="display: inline-block; vertical-align: top;">
+            <input type="checkbox" id="send_email">
+            <span class="checkes"></span>
+            <label for="send_email">Послать по e-mail</label>
+
+            <div class="item_bottom" style="margin: 0 0 0 28px;">
+                <span>Укажите текст уведомления</span>
+                <textarea class="normal email_uv" id="email_text"></textarea>
+            </div>
+        </div>
+             <span class="text_log">
+                 Для указания в тексте уведомления места где будет
+                 располагаться ссылка на карту используйте обозначения
+                 переменной %@. В одной sms можно можно отправить не более
+                 35–ти символов включая пробелы и знаки препинания. Пример
+                 сопроводительного текст для уведомления клиентов:
+                 Ваш купон на скидку %@
+             </span>
+    </div>
+    <div style="clear:both;"></div>
+    <button class="colored button_send" style="float: left; margin: 26px;">
+        Начать рассылку
+    </button>
+</div>

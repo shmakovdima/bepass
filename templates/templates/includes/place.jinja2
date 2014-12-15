@@ -1,0 +1,22 @@
+{% if location.title %}
+    <div>
+    <span class="h3_alter">
+        Адрес
+    </span>
+    <span class="no_width">
+        {{ location.title }}
+    </span>
+    <span class="h3_alter">
+        {{ location.legend }}
+    </span>
+        <span class="no_width"></span>
+
+        <div style="clear: both;"></div>
+        <a href="javascript:void(0)" title="Удалить точку"
+           class="send normal deletezap" id="{{ loop_index }}"
+           onclick="removezap({{ location.lat }}, {{ location.lng }},
+                   {{ loop_index }})">
+            Удалить точку
+        </a>
+    </div>
+{% endif %}

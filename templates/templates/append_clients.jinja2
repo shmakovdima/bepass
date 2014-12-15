@@ -1,0 +1,119 @@
+{% extends "base.jinja2" %}
+
+{% block title %}
+    {{ _("Append clients to the template") }}
+{% endblock title %}
+
+
+{% block js %}
+    <script type="text/javascript" src="/static/js/form.js"></script>
+    <script src="/static/js/jquery.maskedinput.min.js"
+            type="text/javascript"></script>
+    <script src="/static/js/datepicker.js"></script>
+    <script src="/static/js/jquery.tablesorter.min.js"
+            type="text/javascript"></script>
+    <script src="/static/js/sweet-alert.min.js"
+            type="text/javascript"></script>
+    <script src="/static/js/chosen.jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/scripts.js"></script>
+{% endblock %}
+
+{% block content %}
+
+    <div class="come_back var2">
+        <button data-href="{{ url_for('templates') }}">
+            Вернуться обратно
+        </button>
+        <input type="text" placeholder="Введите слово для поиска"
+               class="search" value="{{ request.args.get('query', '') }}">
+
+        <div class="item_on_page">
+            <div class="card_item"
+                    style="background-color:{{ template.background_color }}">
+                <span>
+                    {{ template.primary_field|default('&nbsp;', 1) }}
+                </span>
+                <img src="/static/css/img/strich.png" alt="Штрих-код">
+            </div>
+            <div class="lefted">
+                <span class="main">
+                    {% if template.passTypeId == 'storeCard' %}
+                        Карта магазина
+                    {% elif template.passTypeId == 'coupon' %}
+                        Купон
+                    {% elif template.passTypeId == 'eventTicket' %}
+                        Приглашение
+                    {% endif %}
+                </span>
+
+                <div>id: <span>{{ template_id }}</span></div>
+            </div>
+        </div>
+    </div>
+
+    {% include "templates/includes/append_to_template.jinja2" %}
+    {% include "templates/includes/message_sending.jinja2" %}
+
+    <script>
+        var checked_ids = function () {
+            var ids = [];
+            $('#clients_list').find('input[type=checkbox]').each(function () {
+                var val = $(this).val();
+                if ($(this).is(':checked') && val) {
+                    ids.push(val)
+                }
+            });
+            return ids;
+        };
+
+        var append_clients = function (all) {
+            var ids = checked_ids();
+            $.post(
+                    '{{ url_for('clients_append', template_id=template_id) }}',
+                    {
+                        '_csrf_token': '{{ csrf_token() }}',
+                        'clients_ids': ids
+                    },
+                    function (res) {
+                        document.location.href = document.location.href;
+                    }
+            );
+        };
+
+        var make_mass_send = function () {
+            var data = {
+                send_now: $('#send_now').is(':checked'),
+                send_date: $('#send_date').is(':checked'),
+                date_value: $('#date_value').val(),
+                send_sms: $('#send_sms').is(':checked'),
+                send_email: $('#send_email').is(':checked'),
+                sms_text: $('#sms_text').val(),
+                email_text: $('#email_text').val(),
+                _csrf_token: '{{ csrf_token() }}'
+            };
+            if (data.send_date) {
+                data.when = data.date_value;
+            }
+
+            var whom;
+            if ($('#whom_all').is(':checked')){
+                whom = 'all';
+            }else if ($('#whom_new').is(':checked')) {
+                whom = 'new';
+            }
+
+            data.whom = whom;
+
+            $.post(
+                    '{{ url_for('messaging_send', template_id=template_id) }}',
+                    data,
+                    function (res) {
+                        if (res == 'True') {
+{#                            document.location.href = document.location.href;#}
+                        }
+                    }
+            );
+        };
+    </script>
+
+{% endblock content %}

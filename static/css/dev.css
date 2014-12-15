@@ -1,0 +1,26 @@
+#flash_popup {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  opacity: 0.8; }
+  #flash_popup .child {
+    border: 1px solid blue;
+    background-color: #408090;
+    color: #fff;
+    margin: 5px 0;
+    padding: 3px; }
+
+
+textarea {
+	background-color: rgb(252, 252, 252);
+	border-radius: 3px;
+	box-shadow: inset 0px 1px 0px 0px rgba(211, 211, 213, 0.75);
+	padding: 10px;
+}
+.logo {
+	margin-top: 10px;
+}
+
+.chosen-container-single .chosen-single span {
+	background: transparent;
+}

@@ -1,0 +1,74 @@
+{% extends "base.jinja2" %}
+
+
+{% block content %}
+
+    <div class="shab_wrap">
+        <div class="photo_mob">
+        </div>
+        <div class="right_menu">
+            <ul>
+                <li>Тип</li>
+                <li>Дизайн</li>
+                <li>Текст</li>
+                <li class="active">Отправить</li>
+            </ul>
+            <div class="shab_items">
+                <button class="normal">
+                    Ссылка на текстовую карту
+                </button>
+                <div class="item">
+                    <span>
+                        Нажмите на кнопку сгенерировать чтобы получить
+                        ссылку на карту
+                    </span>
+                    <button>Сгенерировать</button>
+                    <a href="#123" title="Ссылка">
+                        https://card.bepass.ru/jVjv8RI/pass.pkpass
+                    </a>
+                </div>
+
+            </div>
+            <div class="shab_items">
+                <button class="normal">
+                    Отправить ссылку на почту
+                </button>
+                <div class="item">
+                    <span>
+                        Введите e-mail на который Вы хотите отправить ссылку
+                    </span>
+                    <input type="text" placeholder="Введите e-mail">
+                    <a href="#123" title="Отправить" class="send">
+                        Отправить
+                    </a>
+                </div>
+
+            </div>
+            <div class="shab_items">
+                <button class="normal">
+                    Отправить ссылку по смс
+                </button>
+                <div class="item">
+                    <span>
+                        Введите телефонный номер на который нужно послать карту
+                    </span>
+                    <input type="text" placeholder="Введите номер телефона">
+                    <a href="#123" title="Отправить" class="send">
+                        Отправить
+                    </a>
+                </div>
+
+            </div>
+{#            <button class="colored step2">#}
+{#                Следующий шаг#}
+{#            </button>#}
+
+            <button class="step2" data-href="
+            {{ url_for('templates_new', template_id=template_id) }}">
+                Вернуться обратно
+            </button>
+
+        </div>
+    </div>
+
+{% endblock content %}

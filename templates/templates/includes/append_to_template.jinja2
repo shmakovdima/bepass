@@ -1,0 +1,78 @@
+{% from "macro.jinja2" import page_limit, paginator %}
+<span class="title">Добавить клиентов к шаблону</span>
+{{ page_limit() }}
+<table id="clients_list" class="tablesorter">
+    <thead>
+    <tr class="head_table">
+        <th class="header_table-start">
+            <span class="table_icon"></span>
+            <span class="triangle_table"></span>
+        </th>
+        <th>Фамилия</th>
+        <th>Имя</th>
+        <th>Отчество</th>
+        <th>Пол</th>
+        <th>Дата рождения</th>
+        <th>Номер карты</th>
+        <th>Телефон</th>
+        <th>E-mail</th>
+        <th>Статус</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for client in clients %}
+        <tr>
+            <td>
+                <input type="checkbox" value="{{ client._id["$oid"] }}">
+                <span class="checkes"></span>
+            </td>
+            <td>
+                {{ client.last_name }}
+            </td>
+            <td>
+                {{ client.first_name }}
+            </td>
+            <td>
+                {{ client.father_name }}
+            </td>
+            <td>
+                {% if client.sex == 'm' %}
+                    Мужской
+                {% elif client.sex == 'f' %}
+                    Женский
+                {% endif %}
+            </td>
+            <td>
+                {% if client.birthdate %}
+                    {{ client.birthdate['$date']|datetime('medium') }}
+                {% endif %}
+            </td>
+            <td>
+                {{ client.barcode_message }}
+            </td>
+            <td>
+                {{ client.phone }}
+            </td>
+            <td>
+                {{ client.email }}
+            </td>
+            <td>
+                {% if template_id in client.templates %}
+                    <span class="status ok">Добавлен</span>
+                {% else %}
+                    <span class="status no">Не добавлен</span>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </thead>
+</table>
+{{ paginator(page, limit, total) }}
+<div class="next_step">
+    <button onclick="append_clients()">
+        Добавить всех выбранных пользователей к шаблону
+    </button>
+    <button onclick="append_clients('all')">
+        Добавить всех пользователей к шаблону
+    </button>
+</div>

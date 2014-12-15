@@ -1,0 +1,53 @@
+<div class="step_form finish">
+    <div class="shab_items">
+        <div class="item">
+            <button class="normal">Ссылка на тестовую карту</button>
+            <div>
+                <span class="lefted" style="padding-left: 0; font-size: 12px; color: #606a71;" id="card_link">
+                    Нажмите на кнопку "Сгенерировать", чтобы
+                    получить ссылку на карту
+                    <a href="https://card.bepass.ru/b{{ template.first_passbook_url }}">
+                        {% if template %}
+                        https://card.bepass.ru/b{{ template.first_passbook_url }}
+                        {% endif %}
+                    </a>
+                </span>
+                <button onclick="send_form(1)">Сгенерировать</button>
+            </div>
+        </div>
+        <button class="normal">Отправить ссылку на почту</button>
+        <div class="item">
+            <div>
+                <span style="width: 280px; font-size: 12px;">Введите email, на который вы хотите отправить ссылку</span>
+                <input type="text" placeholder="почта" id="send_to_email">
+
+                <div style="clear: both;"></div>
+                <div style="text-align: right; margin-right: 20px;">
+                    <a href="#123" title="Отправить"
+                        class="send address_search_btn"
+                            onclick="send_link('email')">
+                    Отправить
+                    </a>
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+        </div>
+        <button class="normal">Отправить ссылку по SMS</button>
+        <div class="item">
+            <div>
+                <span style="width: 280px; font-size: 12px;">Введите телефонный номер, на который нужно получить карту</span>
+                <input type="text" placeholder="телефон" id="send_to_phone">
+
+                <div style="clear: both;"></div>
+                <div style="text-align: right; margin-right: 20px;">
+                    <a href="#123" title="Отправить"
+                       class="send address_search_btn"
+                       onclick="send_link('sms')">
+                        Отправить
+                    </a>
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+        </div>
+    </div>
+</div>

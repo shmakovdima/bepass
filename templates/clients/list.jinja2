@@ -1,0 +1,93 @@
+{% extends "base.jinja2" %}
+{% from "macro.jinja2" import page_limit, paginator %}
+{% block title %}
+    {{ _("clients")|capitalize }}
+{% endblock title %}
+
+{% block content %}
+    <div class="come_back">
+        <button data-href="{{ url_for("clients_import") }}">
+            Импортировать базу
+        </button>
+        <button data-href="{{ url_for("client_create") }}">
+            Добавить вручную
+        </button>
+        <input type="text" placeholder="Введите слово для поиска"
+               class="search" value="{{ request.args.get('query', '') }}">
+    </div>
+    {{ page_limit() }}
+    <table class="tablesorter">
+        <thead>
+        <tr class="head_table">
+            <th class="header_table-start"><span
+                    class="table_icon"></span><span
+                    class="triangle_table"></span></th>
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Отчество</th>
+            <th>Номер карты</th>
+            <th>Пол</th>
+            <th>Дата рождения</th>
+            <th>Телефон</th>
+            <th>E-mail</th>
+            <th>Пометки</th>
+            <th>Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if clients %}
+            {% for client in clients %}
+                {% set cid=client._id['$oid'] %}
+                <tr>
+                    <td>
+                        <!--suppress HtmlFormInputWithoutLabel -->
+                        <input type="checkbox" value="">
+                        <span class="checkes"></span>
+                    </td>
+                    <td>
+                        {{ client.last_name }}
+                    </td>
+                    <td>
+                        {{ client.first_name }}
+                    </td>
+                    <td>
+                        {{ client.father_name }}
+                    </td>
+                    <td>
+                        {{ client.barcode_message }}
+                    </td>
+                    <td>
+                        {% if client.sex == 'm' %}
+                            Мужской
+                        {% elif client.sex == 'f' %}
+                            Женский
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if client.birthdate %}
+                            {{ client.birthdate['$date']|datetime('medium') }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ client.phone }}
+                    </td>
+                    <td>
+                        {{ client.email }}
+                    </td>
+                    <td>
+                        {{ client.comment }}
+                    </td>
+                    <td>
+                        <a href="{{ url_for("client_create", client_id=cid) }}"
+                           title="Редактировать">
+                            Редактировать
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+        </tbody>
+
+    </table>
+    {{ paginator(page, limit, total) }}
+{% endblock content %}

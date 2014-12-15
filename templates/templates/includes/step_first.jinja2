@@ -1,0 +1,105 @@
+{% from "macro.jinja2" import templatefield %}
+<div class="step_form first">
+    <div class="shab_items">
+        <div class="item">
+            <div>
+                <span class="spec_after">Укажите название Вашей компании</span>
+                <input type="text" placeholder="Название компании"
+                       value="{{ template.organizationName }}" id="organizationName">
+            </div>
+            <div class="item">
+                <div>
+                    <div class="logo_wrapper">
+                        <div class="image_wrapper bind-logo" style="background-image: url('data:image/png;base64,
+                            {{ template['logo.png'] }}')"></div>
+                    </div>
+                    <span class="lefted_h3 lefted">
+                        Изображение логотипа
+                    </span>
+                    <span class="lefted">
+                        Изображение в формате png, размер поля под
+                        логотип 160x50px.
+                    </span>
+
+                    <div style="clear: both"></div>
+                    <div class="load">
+                        <a href=""
+                           title="Заменить изображение" class="send normal">
+                            Заменить изображение
+                        </a>
+                        <input type="file" class="logo_input">
+                    </div>
+                </div>
+                <div>
+                    <div class="inner_strip bind-strip" style="float: left;
+                    background-image: url('data:image/png;base64,
+                            {{ template['strip.png'] }}')">
+                    </div>
+                    <span class="lefted_h3 lefted">
+                        Изображение strip
+                    </span>
+                    <span class="lefted strip">
+                        Изображение в формате png, размер поля под логотип
+                        620x246px.
+                    </span>
+
+                    <div style="clear: both"></div>
+                    <div class="load">
+                        <a href="#" title="Заменить изображение"
+                           class="send normal">
+                            Заменить изображение
+                        </a>
+                        <input type="file" class="strip_input">
+                    </div>
+                </div>
+                <div>
+                    <div class="color_scheme bg_color"></div>
+                    <div class="color_wrapper">
+                        <span class="lefted_h3 lefted">Цвет фона</span>
+                        <span class="lefted selecter">
+                            Выберите цвет фона Вашей карты или задайте
+                            его вручную.
+                        </span>
+                        <input type="text" placeholder="000000"
+                               value="{{ template.background_color|default('#3caffc') }}"
+                               class="lefted color-picker" id="bg_color_input">
+                    </div>
+                    <div style="clear: both"></div>
+                </div>
+                <div>
+                    <div class="color_scheme text_color"></div>
+                    <div class="color_wrapper">
+                        <span class="lefted_h3 lefted">Цвет текста</span>
+                        <span class="lefted selecter">
+                            Выберите цвет текста Вашей карты или задайте
+                            его вручную.
+                        </span>
+                        <input type="text" placeholder="000000"
+                               class="lefted color-picker"
+                               id="text_color_input"
+                               value="{{ template.text_color|default('#ffffff') }}">
+                    </div>
+                    <div style="clear: both"></div>
+                </div>
+                <div>
+                    <div class="color_scheme head_color"></div>
+                    <div class="color_wrapper">
+                        <span class="lefted_h3 lefted">
+                            Цвет заголовка
+                        </span>
+                        <span class="lefted selecter">
+                            Выберите цвет заголовка Вашей карты
+                            или задайте его вручную.
+                        </span>
+                        <input type="text" placeholder="000000"
+                               class="lefted color-picker"
+                               value="{{ template.label_color|default('#ffffff') }}"
+                               id="head_color_input">
+                    </div>
+                    <div style="clear: both"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

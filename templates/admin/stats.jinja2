@@ -1,0 +1,70 @@
+{% extends "base.jinja2" %}
+
+
+{% block content %}
+
+    <div class="come_back">
+        <button data-href="{{ url_for('admin_users') }}">
+            Вернуться обратно
+        </button>
+    </div>
+
+    <table id="users_table">
+        <tr class="head_table">
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Отчество</th>
+            <th>Компания</th>
+            <th>Отправлено<br> смс</th>
+            <th>Отправлено<br> e-mail</th>
+            <th>Отправлено<br> push обновлений</th>
+            <th>Отправлено<br> push сообщений</th>
+        </tr>
+        {% for user in users %}
+            <tr>
+                <td>
+                    {{ user.last_name }}
+                </td>
+                <td>
+                    {{ user.first_name }}
+                </td>
+                <td>
+                    {{ user.father_name }}
+                </td>
+                <td>
+                    {{ user.company }}
+                </td>
+                <td>
+                    {{ user.sms_sent_count }}
+                </td>
+                <td>
+                    {{ user.email_sent_count }}
+                </td>
+                <td>
+                    {% if user.push_count %}
+                        {% if user.push_message_count %}
+                            {{ user.push_count - user.push_message_count }}
+                        {% else %}
+                            {{ user.push_count }}
+                        {% endif %}
+                    {% endif %}
+                </td>
+                <td>
+                    {{ user.push_message_count }}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    {% if page > 1 %}
+        <a href="{{ url_for("admin_users") }}?page={{ page - 1 }}">
+            Prev page
+        </a>
+    {% endif %}
+
+    {% if total > 100 %}
+        <a href="{{ url_for("admin_users") }}?page={{ page + 1 }}">
+            Next page
+        </a>
+    {% endif %}
+{% endblock content %}

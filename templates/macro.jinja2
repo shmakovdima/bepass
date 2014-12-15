@@ -1,0 +1,157 @@
+{#==FLASH==#}
+{% macro flash() %}
+    <script>
+        var flash = new Flash('flash_popup');
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    flash.show('{{ message|escape }}');
+                {% endfor %}
+
+            {% endif %}
+        {% endwith %}
+        $('.flash_hide_all').bind('click', function () {
+            flash.hide_all()
+        });
+
+        var flash_hide = function (e) {
+            var el = $(e);
+            flash.hide(el);
+        };
+
+    </script>
+{% endmacro %}
+
+{#==FORMS==#}
+{#head#}
+{% macro formhead(form) %}
+    {% if form.errors.__form__ %}
+        <ul>
+            {% for err in form.errors.__form__ %}
+                <li>{{ err }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {{ form.hidden_tag() }}
+{% endmacro %}
+
+{#filed#}
+{% macro formfield(field, placeholder='', checkbox=0, class='', nolabel=False, value=False) %}
+    <div class="form_item">
+        {% if not nolabel %}
+            {{ field.label }}
+        {% endif %}
+        {% if value %}
+            {{ field(placeholder=placeholder, class=class, value=value) }}
+        {% else %}
+            {{ field(placeholder=placeholder, class=class) }}
+        {% endif %}
+        {% if checkbox %}
+            <span class="checkes"></span>
+        {% endif %}
+        {% if field.errors %}
+            <ul class="errors">
+                {% for err in field.errors %}
+                    <li>{{ err }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro templatefield(field, placeholder='', class='', value=False, id='') %}
+    {% if value %}
+        {{ field(placeholder=placeholder, class=class, value=value) }}
+    {% else %}
+        {{ field(placeholder=placeholder, class=class) }}
+    {% endif %}
+    {% if field.errors %}
+        <ul class="errors">
+            {% for err in field.errors %}
+                <li>{{ err }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endmacro %}
+
+{% macro isactive(path) %}
+    {% if request.path|startswith(path) %}active{% endif %}
+{% endmacro %}
+
+{% macro page_limit() %}
+    <div class="control_block">
+        <div class="control_block">
+            <div class="control_left">
+                <button class="control">
+                    {{ request.args.get('limit', 100) }}
+                    <span class="header_triangle"></span>
+
+                    <div class="select_pages">
+                        <a href="javascript:void(0)"
+                           onclick="set_get_param({limit: '100', page: '1'})"
+                           title="100 элементов на страницу">
+                            100
+                        </a>
+
+                        <div style="clear: both;"></div>
+                        <a href="javascript:void(0)"
+                           onclick="set_get_param({limit: '50', page: '1'})"
+                           title="50 элементов на страницу">
+                            50
+                        </a>
+
+                        <div style="clear: both;"></div>
+                        <a href="javascript:void(0)"
+                           onclick="set_get_param({limit: '25', page: '1'})"
+                           title="25 элементов на страницу">
+                            25
+                        </a>
+
+                        <div style="clear: both;"></div>
+                        <a href="javascript:void(0)"
+                           onclick="set_get_param({'limit': '0', 'page': 'null'})"
+                           title="Все">
+                            Все
+                        </a>
+                    </div>
+                </button>
+                <span class="name">Элементов на странице</span>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+
+{% macro paginator(page, limit, total) %}
+    {% if page and limit and total %}
+        {% set pages=total // limit %}
+        {% if pages * limit < total %}
+            {% set pages=pages + 1 %}
+        {% endif %}
+        {% if pages > 1 %}
+            <div class="control_block">
+                <div class="control_center">
+                    {% if page > 1 %}
+                        <button class="left">
+
+                        </button>
+                    {% endif %}
+                    <div class="items">
+                        {% for p in range(1, pages + 1) %}
+                            <a href="javascript:void(0)"
+                               onclick="set_get_param('page', '{{ p }}')"
+                               {% if page == p %}class="active"{% endif %}>
+                                {{ p }}
+                            </a>
+                        {% endfor %}
+                    </div>
+                    {% if page < pages %}
+                        <button class="right">
+
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+{% endmacro %}
