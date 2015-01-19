@@ -1,0 +1,60 @@
+{% extends "base.jinja2" %}
+
+
+{% block content %}
+    <table id="users_table">
+        <tr class="head_table">
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Отчество</th>
+            <th>Компания</th>
+            <th>Файл</th>
+            <th>Дата добавления</th>
+            <th>Действия</th>
+        </tr>
+        {% for user in lists %}
+            {% for lst in user.clients_list %}
+                {% if not lst.done %}
+                    <tr>
+                        <td>
+                            {{ user.last_name }}
+                        </td>
+                        <td>
+                            {{ user.first_name }}
+                        </td>
+                        <td>
+                            {{ user.father_name }}
+                        </td>
+                        <td>
+                            {{ user.company }}
+                        </td>
+                        <td>
+                            {{ lst.file_name }}
+                        </td>
+                        <td>
+                            {{ lst.created|datetime('full') }}
+                        </td>
+                        <td>
+                            <a href="
+                        {{ url_for('admin_clients_lists_upload', uid=user.id, list_id=lst.id) }}">
+                                Обработать
+                            </a>
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    </table>
+
+    {#    {% if page > 1 %}#}
+    {#        <a href="{{ url_for("admin_users") }}?page={{ page - 1 }}">#}
+    {#            Prev page#}
+    {#        </a>#}
+    {#    {% endif %}#}
+    {##}
+    {#    {% if total > 100 %}#}
+    {#        <a href="{{ url_for("admin_users") }}?page={{ page + 1 }}">#}
+    {#            Next page#}
+    {#        </a>#}
+    {#    {% endif %}#}
+{% endblock content %}

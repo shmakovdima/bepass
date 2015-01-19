@@ -16,8 +16,7 @@
     <link href='https://fonts.googleapis.com/css?family=Fira+Sans:300,400,
     500,700,300italic,400italic,500italic,700italic&subset=latin,cyrillic'
           rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,
-    400italic,600italic,700italic,800italic,400,600,300,700,800&subset=latin,cyrillic-ext,latin-ext,cyrillic,greek-ext,greek,vietnamese'
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,600,300,700,800&subset=latin,cyrillic-ext,latin-ext,cyrillic,greek-ext,greek,vietnamese'
           rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/CSS" href="/static/css/chosen.css"/>
 
@@ -52,6 +51,11 @@
                title="Статистика" class="
                {{ isactive('/admin/stats/')|trim }}">
                 Статистика
+            </a>
+            <a href="{{ url_for('admin_clients_lists') }}"
+               title="Файлы пользователей" class="
+               {{ isactive('/admin/clients_lists/')|trim }}">
+                Файлы пользователей
             </a>
         {% else %}
             <a href="{{ url_for('templates') }}"
@@ -103,5 +107,6 @@
         );
     });
 </script>
+{#<script type="text/javascript" src="https://seal.thawte.com/getthawteseal?host_name=card.bepass.ru&amp;size=M&amp;lang=en"></script>#}
 </body>
 </html>

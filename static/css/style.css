@@ -1212,6 +1212,9 @@ nav a.active, .right_menu ul li.active{
   user-select: none; 
   box-shadow: none;
   cursor: pointer;
+	text-overflow: ellipsis;
+	max-width: 200px;
+	overflow: hidden;
 }
 
 nav a.right, .header_person  {

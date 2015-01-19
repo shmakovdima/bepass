@@ -1,0 +1,70 @@
+{% extends "base.jinja2" %}
+{% from "macro.jinja2" import formhead, formfield %}
+
+{% block title %}
+    {{ _("import clients")|capitalize }}
+{% endblock title %}
+
+{% block content %}
+
+    <div class="come_back">
+        <button data-href="{{ url_for('admin_clients_lists') }}">
+            Вернуться назад
+        </button>
+        <div style="clear: both;"></div>
+        Файл:
+        <a href="
+        {{ url_for('admin_clients_lists_download', uid=uid, list_id=list_id) }}">
+            {{ lst.name }}
+        </a>
+        <br>
+        {% if mime and mime|startswith('text/') %}
+{#        <textarea#}
+{#                style="width: 800px; height: 400px">{{ lst.content }}</textarea>#}
+        {% endif %}
+
+        <div>
+            <div>
+                <form action="./" method="post"
+                      enctype="multipart/form-data"
+                      id="csv_form">
+                    {{ formhead(form) }}
+                    <div class="form_item" style="position: absolute; top:
+                    -1000px">
+                        {{ formfield(form.csv_file, nolabel=1) }}
+                    </div>
+                </form>
+                <button class="colored step2 next_button" id="load_csv"
+                        style="float: left;">
+                    Загрузить csv
+                </button>
+                <br/>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <script>
+        $(document).ready(
+                function () {
+                    var csvFile = $('#csv_file');
+                    $('#load_csv').on('click', function (e) {
+                        csvFile.click();
+                    });
+
+                    csvFile.on('change', function () {
+                        if ($(this).val().search(/.\.csv$/) > 0)
+                            $('#csv_form').submit();
+                        else
+                            alert("Должен быть файл CSV!");
+                    });
+                }
+        );
+        {% if exceed %}
+            sweetAlert(
+                    "Ошибка",
+                    "Вы привысили лимит в 1000 клиентов",
+                    "error"
+            );
+        {% endif %}
+    </script>
+{% endblock content %}

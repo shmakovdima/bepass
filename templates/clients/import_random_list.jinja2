@@ -1,0 +1,53 @@
+{% extends "base.jinja2" %}
+{% from "macro.jinja2" import formhead, formfield %}
+
+{% block title %}
+    {{ _("import clients")|capitalize }}
+{% endblock title %}
+
+{% block content %}
+
+    <div class="come_back">
+        <button data-href="{{ url_for('clients') }}">Вернуться назад</button>
+        <div style="clear: both;"></div>
+
+        <div>
+
+            <div>
+                <form action="./" method="post" enctype="multipart/form-data"
+                      id="csv_form">
+                    {{ formhead(form) }}
+                    <div class="form_item" style="position: absolute; top:
+                    -1000px">
+                        {{ formfield(form.csv_file, nolabel=1) }}
+                    </div>
+                </form>
+                <button class="colored step2 next_button" id="load_csv"
+                        style="float: left;">
+                    Загрузить файл
+                </button>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(
+                function () {
+                    var csvFile = $('#csv_file');
+                    $('#load_csv').on('click', function (e) {
+                        csvFile.click();
+                    });
+
+                    csvFile.on('change', function () {
+                        $('#csv_form').submit();
+                    });
+                }
+        );
+        {% if success %}
+            sweetAlert(
+                    "Загружено",
+                    "Файл успешно загружен!",
+                    "success"
+            );
+        {% endif %}
+    </script>
+{% endblock content %}

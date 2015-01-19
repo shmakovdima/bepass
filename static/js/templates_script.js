@@ -74,13 +74,19 @@ var card = {
 
             $('.bind-logo').html('<img src = "' + this.logo + '" >');
             $('.bind-logo img').css({'background-image': 'url("' + this.logo + '")'});
+			$(".inner_head .image_wrapper img").each(function(){
+				var curh = $(this).height();
+				
+				$(this).css("margin-top",((50-curh)/2)+"px");
+				$(".logo_wrapper .image_wrapper img").css("margin-top",((50-curh)/2)+"px");;
+			});
         }
 
         if ($('.bind-strip img').attr('src') != this.strip &&
             $('.bind-strip img').css('background-image') != 'url("' + this.strip + '")') {
             $(".bind-strip").find("img").remove();
             $('.bind-strip').append('<img src = "' + this.strip + '" >');
-            $('.bind-strip').css({'background-image': 'url("' + this.strip + '")'});
+            $('.bind-strip img').css({'background-image': 'url("' + this.strip + '")'});
         }
 
 
@@ -88,7 +94,11 @@ var card = {
             $('.bind-notifications-icon img').css('background-image') != 'url("' + this.notifications_icon + '")') {
 
             $('.bind-notifications-icon').html('<img src = "' + this.notifications_icon + '" >');
-            $('.bind-notifications-icon').css({'background-image': 'url("' + this.notifications_icon + '")'});
+            $('.bind-notifications-icon img').css({'background-image': 'url("' + this.notifications_icon + '")'});
+			$('.bind-notifications-icon img').each(function(){
+				var curh = $(this).height();
+				$('.bind-notifications-icon img').css("margin-top",((56-curh)/2)+"px");
+			});
         }
 
 
@@ -133,12 +143,10 @@ function handleFileSelect(field) {
 
         // Loop through the FileList and render image files as thumbnails.
         for (var i = 0, f; f = files[i]; i++) {
-
             // Only process image files.
             if (!f.type.match('image.*')) {
                 continue;
             }
-
             var reader = new FileReader();
 
             // Closure to capture the file information.
@@ -221,14 +229,20 @@ function initNullStep() {
     $('.finish_button').hide();
 
     $('.type_2_btn').click(function () {
+		$("#text_color_input").removeClass("disactive");
         $('body').removeClass('t3').removeClass('t1').addClass('t2');
         $('.type_btn').removeClass('active');
         $('.type_2_btn').addClass('active');
         if (!card.template_id) {
             $('.mob_preview')[0].src = '/static/css/img/card_2.png';
             $('#bg_color_input').val('#33e07b');
+			card.set('bg_color', $('#bg_color_input').val());
+			card.set('text_color', $('#text_color_input').val());
+			card.set('head_color', $('#head_color_input').val());
         }
-        card.logo = '/static/css/img/logo_2.png';
+        card.logo = '/static/css/img/logo_black.png';
+		
+		
         card.strip = '/static/css/img/strip_2.png';
         card.name = '';
         card.description = '';
@@ -236,30 +250,42 @@ function initNullStep() {
         card.date = '01.12.2014';
         card.card_type = 'coupon';
         formReset();
+		
     });
     $('.type_1_btn').click(function () {
         $('body').removeClass('t3').removeClass('t2').addClass('t1');
         $('.type_btn').removeClass('active');
+		
         $('.type_1_btn').addClass('active');
         if (!card.template_id) {
             $('.mob_preview')[0].src = '/static/css/img/card_1.png';
             $('#bg_color_input').val('#3caffc');
+			card.set('bg_color', $('#bg_color_input').val());
+			card.set('text_color', $('#text_color_input').val());
+			card.set('head_color', $('#head_color_input').val());
         }
-        card.logo = '/static/css/img/logo_1.png';
+		$("#text_color_input").addClass("disactive");
+        card.logo = '/static/css/img/logo_black.png';
+	
         card.strip = '/static/css/img/strip.png';
         card.name = '';
         card.card_type = 'store';
         formReset();
     });
     $('.type_3_btn').click(function () {
+		$("#text_color_input").removeClass("disactive");
         $('body').removeClass('t1').removeClass('t2').addClass('t3');
         $('.type_btn').removeClass('active');
         $('.type_3_btn').addClass('active');
         if (!card.template_id) {
             $('.mob_preview')[0].src = '/static/css/img/card_3.png';
             $('#bg_color_input').val('#fc5441');
+			card.set('bg_color', $('#bg_color_input').val());
+			card.set('text_color', $('#text_color_input').val());
+			card.set('head_color', $('#head_color_input').val());
         }
-        card.logo = '/static/css/img/logo_3.png';
+        card.logo = '/static/css/img/logo_black.png';
+		
         card.strip = '/static/css/img/strip_3.png';
         card.name = '';
         card.description = '';
@@ -269,7 +295,45 @@ function initNullStep() {
     });
     $('.type_1_btn').click();
 }
-function initFirstStep() {
+function initSecondStep() {
+	
+		
+    if (($(".name_company").val() === "")) {
+        sweetAlert("Ошибка", "Вы не заполнили поле: Название бренда", "error");
+        $(".name_company").addClass("incorrect");
+        initFirstStep();
+        return;
+    }
+	
+    
+        if ($(".text_logo").val() === "") {
+            sweetAlert("Ошибка", "Вы не ввели текст рядом с логотипом", "error");
+            $(".text_logo").addClass("incorrect");
+            initFirstStep();
+            return;
+        }
+
+        if ($(".contact_firm").val() === "") {
+            sweetAlert("Ошибка", "Вы не ввели контактные данные вашей организации", "error");
+            $(".contact_firm").addClass("incorrect");
+            initFirstStep();
+            return;
+        }
+
+   
+
+/*
+    if (($(".address_input").val() !== "") || ($(".address_legend_input").val() !== "") || ($(".notifications_icon_wrapper.bind-notifications-icon img").attr("src") !== "")) {
+        if (($(".notifications_icon_wrapper.bind-notifications-icon img").attr("src") === "")) {
+            sweetAlert("Ошибка", "Вы не добавили иконку для уведомления", "error");
+            initFirstStep();
+            return;
+        }
+    }
+	*/
+
+	
+	
     $('.step_form').hide();
     $('.step_form.first').show();
     $('.back_mob').hide();
@@ -277,71 +341,46 @@ function initFirstStep() {
     $('.preview_mob').hide();
     $('.addition_to_phone.step_1').show();
     $('.addition_to_phone.step_2').hide();
-    $('.next_button').off('click').on('click', initSecondStep).show();
-    $('.prev_button').show().off('click').on('click', initNullStep);
+    $('.next_button').off('click').on('click', initFinishStep).show();
+    $('.prev_button').show().off('click').on('click', initFirstStep);
     $('.finish_button').hide();
 
     $('.menu_li').removeClass('active');
     $('.design_li').addClass('active');
-    $('#bg_color_input').iris({
-        width: 132,
-        hide: false,
-        border: false,
-        target: $('.color_scheme.bg_color')[0],
-        change: function () {
-            setTimeout(function () {
-                card.set('bg_color', $('#bg_color_input').val());
-            }, 0);
-        }
-    });
+	
+
+		
+  
     card.set('bg_color', $('#bg_color_input').val());
-
-    $('#head_color_input').iris({
-        width: 132,
-        hide: false,
-        border: false,
-        target: $('.color_scheme.head_color')[0],
-        change: function () {
-            setTimeout(function () {
-                card.set('head_color', $('#head_color_input').val());
-            }, 0);
-        }
-    });
+	
+	
     card.set('head_color', $('#head_color_input').val());
+	
 
-    $('#text_color_input').iris({
-        width: 132,
-        hide: false,
-        border: false,
-        target: $('.color_scheme.text_color')[0],
-        change: function () {
-            setTimeout(function () {
-                card.set('text_color', $('#text_color_input').val());
-            }, 0);
-        }
-    });
     card.set('text_color', $('#text_color_input').val());
 
     $('.logo_input').change(handleFileSelect('logo'));
     $('.strip_input').change(handleFileSelect('strip'));
+	$(".inner_head .image_wrapper img").each(function(){
+				var curh = $(this).height();
+				
+				$(this).css("margin-top",((50-curh)/2)+"px");
+				$(".logo_wrapper .image_wrapper img").css("margin-top",((50-curh)/2)+"px");;
+	});
 }
 
 function removezap(lat, lng, item) {
     $("#" + item).parent().remove();
     card.removePlace(lat, lng);
     if (card.getPlaces().length < 10) {
-        $(".send .address_add_btn.save_point").fadeIn();
+        $(".send .address_add_btn.add_point").fadeIn();
+	
     }
 }
 
 
-function initSecondStep() {
-    if (($(".name_company").val() === "")) {
-        sweetAlert("Ошибка", "Вы не заполнили поле: Название бренда", "error");
-        $(".name_company").addClass("incorrect");
-        initFirstStep();
-        return;
-    }
+function initFirstStep() {
+
     $('.menu_li').removeClass('active');
     $('.text_li').addClass('active');
     $('.addition_to_phone.step_1').hide();
@@ -351,23 +390,19 @@ function initSecondStep() {
     $('.back_mob').show();
     $('.front_mob').show();
     $('.preview_mob').hide();
-    $('.next_button').off('click').on('click', initFinishStep).show();
-    $('.prev_button').show().off('click').on('click', initFirstStep);
+    $('.next_button').off('click').on('click', initSecondStep).show();
+    $('.prev_button').show().off('click').on('click', initNullStep);
     $('.finish_button').hide();
 
 
     $('#name_input').bind('input', function () {
-
         card.set('name', $('#name_input').val());
-
     });
 
     card.set('name', $('#name_input').val());
 
     $('#contacts_input').bind('input', function () {
-
         card.set('contacts', $('#contacts_input').val());
-
     });
     card.set('contacts', $('#contacts_input').val());
 
@@ -434,60 +469,41 @@ function initSecondStep() {
 
     $('#confirm_input').change(function () {
         setTimeout(function () {
-            card.set('confirm', $('#confirm_input').prop('checked'))
+            card.set('confirm', $('#confirm_input').prop('checked'));
         }, 0);
     });
+	$(".inner_head .image_wrapper img").each(function(){
+				var curh = $(this).height();
+			
+				$(this).css("margin-top",((50-curh)/2)+"px");
+				$(".logo_wrapper .image_wrapper img").css("margin-top",((50-curh)/2)+"px");;
+	});
 }
 function initFinishStep() {
 
-    if ($(".name_company").val() === "") {
-        sweetAlert("Ошибка", "Вы не ввели название вашей организации", "error");
+
+    if (($(".name_company").val() === "")) {
+        sweetAlert("Ошибка", "Вы не заполнили поле: Название бренда", "error");
         $(".name_company").addClass("incorrect");
         initFirstStep();
         return;
     }
-
-    if (($(".text_logo").val() === "") || ($(".contact_firm").val() === "")) {
-        if ($(".text_logo").val() === "") {
-            sweetAlert("Ошибка", "Вы не ввели текст рядом с логотипом", "error");
+	
+	     if ($(".text_logo").val() === "") {
+            sweetAlert("Ошибка", "Вы не ввели заголовок карты", "error");
             $(".text_logo").addClass("incorrect");
-            initSecondStep();
+            initFirstStep();
             return;
         }
 
         if ($(".contact_firm").val() === "") {
             sweetAlert("Ошибка", "Вы не ввели контактные данные вашей организации", "error");
             $(".contact_firm").addClass("incorrect");
-            initSecondStep();
+            initFirstStep();
             return;
         }
 
-        return;
-    }
-
-
-    if (($(".address_input").val() !== "") || ($(".address_legend_input").val() !== "") || ($(".notifications_icon_wrapper.bind-notifications-icon img").attr("src") !== "")) {
-        if (($(".notifications_icon_wrapper.bind-notifications-icon img").attr("src") === "")) {
-            sweetAlert("Ошибка", "Вы не добавили иконку для уведомления", "error");
-            initSecondStep();
-            return;
-        }
-
-        //if ($(".address_input").val()==="") {
-        //	sweetAlert("Ошибка","Вы не ввели адрес", "error");
-        //	$(".address_input").addClass("incorrect");
-        //	initSecondStep();
-        //	return;
-        //}
-        //
-        //if ($(".address_legend_input").val()==="") {
-        //	sweetAlert("Ошибка","Вы не ввели текст уведомления", "error");
-        //	$(".address_legend_input").addClass("incorrect");
-        //	initSecondStep();
-        //	return;
-        //}
-    }
-
+	
     $('.menu_li').removeClass('active');
     $('.send_li').addClass('active');
     $('.addition_to_phone.step_1').hide();
@@ -503,7 +519,50 @@ function initFinishStep() {
 }
 
 
+
+
+
 $(document).ready(function () {
+	
+		$('#bg_color_input').iris({
+        width: 132,
+        hide: false,
+        border: false,
+        target: $('.color_scheme.bg_color')[0],
+        change: function () {
+            setTimeout(function () {
+                card.set('bg_color', $('#bg_color_input').val());
+            }, 0);
+        }
+    });
+
+    $('#head_color_input').iris({
+        width: 132,
+        hide: false,
+        border: false,
+        target: $('.color_scheme.head_color')[0],
+        change: function () {
+            setTimeout(function () {
+                card.set('head_color', $('#head_color_input').val());
+            }, 0);
+        }
+    });
+	
+    $('#text_color_input').iris({
+        width: 132,
+        hide: false,
+        border: false,
+        target: $('.color_scheme.text_color')[0],
+        change: function () {
+
+			if (!$("#text_color_input").hasClass("disactive")) {
+				setTimeout(function () {
+                	card.set('text_color', $('#text_color_input').val());
+            	}, 0);
+			}
+			
+        }
+    });
 
     initNullStep();
     if ($("body").hasClass("redshab")) {
@@ -511,16 +570,10 @@ $(document).ready(function () {
     }
 
     $('.type_li').click(initNullStep);
-    $('.design_li').click(initFirstStep);
-    $('.text_li').click(initSecondStep);
+    $('.design_li').click(initSecondStep);
+    $('.text_li').click(initFirstStep);
     $('.send_li').click(initFinishStep);
 
-    $('.locker_address').click(function () {
-        if ($('.locker_address').hasClass('open'))
-            $('.locker_address').removeClass('open');
-        else
-            $('.locker_address').addClass('open');
-    });
 
     $("input, textarea").focus(function () {
         $("input, textarea").removeClass("incorrect");
@@ -531,6 +584,9 @@ $(document).ready(function () {
     });
 
     $(".disactive").keydown(function (event) {
+        event.preventDefault();
+    });
+	$(".disactive").change(function (event) {
         event.preventDefault();
     });
 
@@ -550,10 +606,10 @@ $(document).ready(function () {
         }
     });
 
-    $(".send.address_add_btn.save_point").on("click", function (event) {
-        event.preventDefault();
-        //item++;
-        if (($(".notifications_icon_wrapper.bind-notifications-icon img").attr("src") === "")) {
+	
+	$(".send.save_point").on("click", function (event) {
+		   event.preventDefault();
+		if (($(".notifications_icon_wrapper.bind-notifications-icon img").attr("src") === "")) {
             sweetAlert("Ошибка", "Вы не добавили иконку для уведомления", "error");
             return;
         }
@@ -569,8 +625,8 @@ $(document).ready(function () {
             $(".address_legend_input").addClass("incorrect");
             return;
         }
-
-        if ((card.isValidPlace()) && (card.getPlaces().length < 10)) {
+		
+		if ((card.isValidPlace()) && (card.getPlaces().length < 10)) {
             card.addPlace();
             itemzap++;
             $('<div><span class="h3_alter">Адрес</span><span class="no_width">' + $('.address_input').val() + '</span><span class="h3_alter">Текстовое уведомление</span><span class="no_width">' + $('.address_legend_input').val() + '</span><div style="clear: both;"></div><a href="#123" title="Удалить точку" class="send normal deletezap" id="' + itemzap + '" onclick="removezap(' + card.places[card.places.length - 2].lat + ',' + card.places[card.places.length - 2].lng + ',' + itemzap + ')">Удалить точку</a></div>').appendTo('.addresses');
@@ -579,15 +635,33 @@ $(document).ready(function () {
         }
 
         if (card.getPlaces().length == 10) {
-            $(".send .address_add_btn.save_point").fadeOut();
+            $(".send .address_add_btn.add_point").fadeOut();
         }
+		
+		$(".hidden").fadeOut();
+		$(".address_input").val("");
+		$(".address_legend_input").val("");
 
         $(".delcur").fadeOut();
+		$(".save_point").fadeOut();
+	});
+	
+	
+	
+    $(".send.address_add_btn.add_point").on("click", function (event) {
+        event.preventDefault();		
+		if ($(".hidden").css("display")!=="none") {
+			 sweetAlert("Ошибка", "Введите значения для текущей точки", "error");
+			return;
+		}	
+		$(".hidden").fadeIn();
+		$(".save_point").fadeIn();
+      
     });
 
     $(".delcur").on("click", function (event) {
         event.preventDefault();
-        $(".notifications_icon_wrapper.bind-notifications-icon").css("background-image", "");
+        $(".notifications_icon_wrapper.bind-notifications-icon img").css("background-image", "");
         $(".notifications_icon_wrapper.bind-notifications-icon img").remove();
         $(".notifications_icon_wrapper.bind-notifications-icon").html("<img src=''>");
         $(this).fadeOut();
@@ -629,10 +703,6 @@ $(document).ready(function () {
 });
 
 
-if ($(".inner.bind-bg-color").prop("style") == "") {
-    $(".inner.bind-bg-color").css("background-color", "rgb(60, 175, 252)");
-}
-
 function testingmail(item) {
     if (item.val() !== "") {
         var pattern = /^([a-z0-9_\.-])+@[a-z0-9-]+\.([a-z]{2,4}\.)?[a-z]{2,4}$/i;
@@ -648,3 +718,12 @@ function testingmail(item) {
     }
 }
 
+$(function(){
+ var topPos = $('.floating').offset().top-44;
+	console.log(topPos);//topPos - это значение от верха блока до окна браузера
+ $(window).scroll(function() { 
+  var top = $(document).scrollTop();
+  if (top > topPos) $('.floating').addClass('fixed'); 
+  else $('.floating').removeClass('fixed');
+ });
+});

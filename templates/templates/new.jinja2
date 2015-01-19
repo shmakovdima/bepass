@@ -1,4 +1,4 @@
-﻿{% extends "base.jinja2" %}
+﻿﻿{% extends "base.jinja2" %}
 {% from "macro.jinja2" import formhead %}
 
 {% block js %}
@@ -23,7 +23,7 @@
 
 {% block content %}
     <div class="shab_wrap">
-        <div class="photo_mob">
+        <div class="photo_mob floating">
             <div class="mob preview_mob">
                 <div class="inner">
                     <img src="" class="mob_preview">
@@ -67,7 +67,7 @@
                     <span>Цвет текста</span>
                 </div>
                 <div class="text_zag update_to_small addition_to_phone left step_2"
-                     style="top: 75px; left: 475px;">
+                     style="top: 75px; left: 495px;">
                     <span>Текст заголовка</span>
                 </div>
                 <div class="field_zag update_to_small addition_to_phone right step_1"
@@ -75,19 +75,19 @@
                     <span>Изображение логотипа</span>
                 </div>
                 <div class="field_usl update_to_small addition_to_phone right step_1"
-                     style="left: 20px; top: 129px;">
-                    <span>Изображение strip</span>
+                     style="left: 30px; top: 129px;">
+                    <span>Изображение</span>
                 </div>
                 <div class="field_usl update_to_small addition_to_phone right step_2"
-                     style="left: -70px; top: 140px;">
+                     style="left: -14px; top: 140px;">
                     <span>Поле "Контакты"</span>
                 </div>
                 <div class="field_usl2 update_to_small addition_to_phone right step_1"
-                     style="left: 20px; top: 180px;">
+                     style="left: 30px; top: 180px;">
                     <span>Цвет фона</span>
                 </div>
                 <div class="field_usl2 update_to_small addition_to_phone right step_2"
-                     style="left: -70px; top: 250px;">
+                     style="left: -14px; top: 250px;">
                     <span>Поле "Условия"</span>
                 </div>
                 <div class="pre_inner">
@@ -120,8 +120,8 @@
                         Тип
                     </li>
                 {% endif %}
-                <li class="design_li menu_li">Дизайн</li>
                 <li class="text_li menu_li">Текст</li>
+				<li class="design_li menu_li">Дизайн</li>
                 <li class="send_li menu_li">Отправка</li>
             </ul>
             <div class="step_form zero"
@@ -130,21 +130,14 @@
                 <div class="type_btn first noneselect spec_after">Выберите тип
                     карты
                 </div>
-                <div class="type_btn type_1_btn">Карта магазина</div>
+                <div class="type_btn type_1_btn">Карта</div>
                 <div class="type_btn type_2_btn">Купон</div>
                 <div class="type_btn type_3_btn">Приглашение</div>
             </div>
             <div class="step_form first">
                 <div class="shab_items">
                     <div class="item">
-                        <div>
-                            <span class="spec_after">Название бренда</span>
-                            <input type="text" placeholder="Название бренда"
-                                   id="organizationName"
-                                   class="name_company
-                                    {% if template %}disactive{% endif %}"
-                                   value="{{ template.organizationName }}">
-                        </div>
+                       
                         <div class="item">
                             <div>
                                 <div class="logo_wrapper">
@@ -167,7 +160,7 @@
                                 <div class="inner_strip bind-strip"
                                      style="float: left;">
                                 </div>
-                                <span class="lefted_h3 lefted">Изображение strip</span>
+                                <span class="lefted_h3 lefted">Изображение</span>
                         <span class="lefted strip">Изображение в формате png, размер
   поля под логотип 620x246px.</span>
 
@@ -198,7 +191,7 @@
                                 </div>
                                 <div style="clear: both"></div>
                             </div>
-                            <div>
+                            <div  class="only_t2 only_t3">
                                 <div class="color_scheme text_color"></div>
                                 <div class="color_wrapper">
                                     <span class="lefted_h3 lefted">
@@ -239,13 +232,23 @@
             </div>
             <div class="step_form second">
                 <div class="shab_items">
+					<div class="item">
+						 <div>
+                            <span class="spec_after">Название бренда</span>
+                            <input type="text" placeholder="Название бренда"
+                                   id="organizationName"
+                                   class="name_company
+                                    {% if template %}disactive{% endif %}"
+                                   value="{{ template.organizationName }}">
+								    <span class="tips">Имя отправителя пуш-уведомления</span>
+                        </div>
+					</div>
                     <button class="normal no-cursor">Лицевая сторона карты
                     </button>
                     <div class="item">
                         <div>
                             <span class="spec_after">
-                                Текст рядом с логотипом
-                            </span>
+                              Заголовок карты</span>
                             <input type="text" placeholder="Текст"
                                    id="name_input"
                                    value="{{ template.logo_text }}"
@@ -383,8 +386,7 @@
                     </div>
                 </div>
                 <div class="shab_items">
-                    <button class="normal more locker locker_address"><span
-                            class="header_triangle"></span>Уведомления по
+                    <button class="normal no-cursor">Уведомления по
                         геопозиции
                     </button>
                     <div class="item">
@@ -406,16 +408,21 @@
 
                                 <div style="clear: both"></div>
                                 <a href="javascript:void(0);"
-                                   class="send address_search_btn delcur normal"
+                                   class="send address_search_btn delcur normal nomargin"
                                    title="Удалить текущее изображение">Удалить
                                     изображение</a>
                             </div>
                         </div>
                         <div class="address_place">
                             <div class="addresses">
+                                {% for location in template.locations %}
+                                    {% with loop_index = loop.index %}
+                                        {% include "templates/includes/place.jinja2" %}
+                                    {% endwith %}
+                                {% endfor %}
                             </div>
                             <div class="address_form">
-                                <div>
+                                <div class="hidden">
                                     <span>Введите адрес</span>
                                     <input type="text"
                                            placeholder="Введите адрес"
@@ -425,12 +432,11 @@
                                     <div style="text-align: right;">
                                         <a href="javascript:void(0);"
                                            title="Отправить"
-                                           class="send address_search_btn">Найти
-                                            точку</a></div>
+                                           class="send address_search_btn">Поиск</a></div>
                                     <div class="holder"></div>
                                     <div style="clear: both;"></div>
                                 </div>
-                                <div>
+                                <div class="hidden">
                                     <span>Введите текст уведомления</span>
                                     <input type="text"
                                            placeholder="Текст вашего уведомления"
@@ -440,13 +446,21 @@
 
                                     <div style="clear: both;"></div>
                                 </div>
-                                <div style="text-align: right;"><a
+								 <div style="clear: both;"></div>
+                                <div style="text-align: right;">
+								<a style="float: left;"
+                                        href="javascript:void(0);"
+                                        title="Сохранить"
+                                        class="send address_add_btn save_point">Сохранить точку</a>
+								
+								<a
                                         href="javascript:void(0);"
                                         title="Отправить"
-                                        class="send address_add_btn save_point">Добавить
+                                        class="send address_add_btn add_point">Добавить
                                     еще точку</a></div>
 
                                 <div style="clear: both;"></div>
+								 <span class="tips" style="float:right; margin-top: 5px;">Не более 10 точек</span>
                             </div>
                         </div>
                     </div>
@@ -460,8 +474,8 @@
                                   style="padding-left: 0; font-size: 13px; color: #606a71;">
                                 Нажмите на кнопку "Сохранить", чтобы получить ссылку на карту
                                 {% if template %}
-                                    <a href="https://card.bepass.ru/b{{ template.first_passbook_url }}/">
-                                        https://card.bepass.ru/b{{ template.first_passbook_url }}/
+                                    <a href="https://{{ site_name }}/b{{ template.first_passbook_url }}/">
+                                        https://{{ site_name }}/b{{ template.first_passbook_url }}/
                                     </a>
                                 {% else %}
                                     <a href=""></a>
@@ -518,6 +532,25 @@
         {% if template %}
             card.card_type = "{{ template.ttype }}";
             card.template_id = "{{ template.id }}";
+            {% if template.locations|length > 0 %}
+                card.places = [];
+            {% endif %}
+            {% for location in template.locations %}
+                {% if location.title %}
+                    itemzap++;
+                    card.places.push(
+                            {
+                                'title': '{{ location.title }}',
+                                'lat': {{ location.lat|default(0) }},
+                                'lng': {{ location.lng|default(0) }},
+                                'legend': '{{ location.legend }}'
+                            }
+                    );
+                {% endif %}
+            {% endfor %}
+            {% if template.locations|length > 0 %}
+                card.addPlace();
+            {% endif %}
             $(document).ready(function () {
                 card.card_type = "{{ template.ttype }}";
                 if (card.card_type == 'coupon') {
@@ -626,7 +659,7 @@
             }
 
             if (!email && !sms)
-                return 100;
+                return;
 
             $.get(
                     url,
@@ -635,7 +668,7 @@
                         if (res['exceed'] == 1) {
                             sweetAlert(
                                     "Ошибка",
-                                    "Вы привысили лимит в 1000 смс сообщений",
+                                    "Вы привысили лимит в 500 смс сообщений",
                                     "error"
                             );
                         } else {

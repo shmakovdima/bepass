@@ -32,6 +32,10 @@
     border:none !important;
 }
 
+.shab_items .item a.send.normal.nomargin {
+	margin-bottom: 0px;
+}
+
 .delcur {
   display: none;
 }
@@ -517,6 +521,9 @@ nav a.active, .right_menu ul li.active{
   user-select: none; 
   box-shadow: none;
   cursor: pointer;
+	text-overflow: ellipsis;
+	max-width: 200px;
+	overflow: hidden;
 }
 
 nav a.right, .header_person  {
@@ -965,7 +972,7 @@ background: transparent;
 .shab_items .item input[type="text"]{
   position: relative;float: left;
   clear: left;
-  width: 340px;
+  width: 370px;
   margin-top: 10px;
   background-color: rgb(252, 252, 252);
   box-shadow: inset 0px 1px 0px 0px rgba(211, 211, 213, 0.75);
@@ -1139,11 +1146,17 @@ font-size: 13px;
 }
 
 *.update_to_small {
-  width: 136px;
+  width: 100px;
+overflow: hidden;
 }
 
 *.update_to_small.left {
   background: url("img/line_left2.png") no-repeat bottom left;
+}
+
+*.update_to_small.left.step2 {
+	width: 90px;
+	overflow: hidden;
 }
 
 *.update_to_small.right {
@@ -1198,7 +1211,7 @@ input[type="text"].lefted+.selected_time+span.lefted_h3 {
 }
 
 .shab_items .item input[type="text"].lefted {
-  width: 50px;
+  width: 80px;
   height: 26px;
   text-align: center;
   color: rgba(96, 106, 113, 0.9);
@@ -1248,7 +1261,7 @@ input[type="text"].lefted+.selected_time+span.lefted_h3 {
   left: 5px;
   right: 5px;
   overflow: hidden;
-  border:1px soid transparent;
+  border:1px solid transparent;
   border-radius:7px;
 }
 .inner div {
@@ -1267,12 +1280,16 @@ input[type="text"].lefted+.selected_time+span.lefted_h3 {
   padding: 0 10px;
   height: 50px; line-height: 50px;
   background-color: transparent;
+	display: table;
 }
 .image_wrapper img {
+	display: table-cell;
   background-color: transparent;
   vertical-align: middle;
   max-height: 30px;
   max-width: 40px;
+	min-height: 22px;
+	line-height: 50px;
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
@@ -1415,7 +1432,7 @@ float: left;
   margin-top: -1px;
 }
 textarea.small {
-  width: 350px;
+  width: 370px;
   height: 50px;
   resize: vertical;
 }
@@ -1488,7 +1505,6 @@ textarea.small {
   font-size: 8px;
 }
 .check_confirm_wrapper {
-  height: 100%;
   padding: 35px 10px 0 0;
   float: left;
 }
@@ -1515,18 +1531,13 @@ a.send:active {
   float: none !important;
 }
 .logo_wrapper .image_wrapper, .logo_wrapper .notifications_icon_wrapper {
-  width: 56px;
-  height: 56px;
-  line-height: 56px;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
   background-position: center;
   background-size: contain;
 }
-.locker + div {
-  display: none;
-}
-.locker.open + div {
-  display: block;
-}
+
 .locker .header_triangle {
   -webkit-transform: rotate(180deg);
   -moz-transform: rotate(180deg);
@@ -1638,4 +1649,46 @@ span + textarea {
 
 div .send.address_search_btn.email, div .send.address_search_btn.send_phone {
 	margin-right: -20px;
+}
+
+.text-right, .shab_items .item span.tips.text-right {
+	text-align: right;
+	float: right;
+	margin-top: 0px;
+}
+
+.mob.back_mob {
+	margin-right: 25px;
+}
+
+.text_zag.update_to_small.addition_to_phone.left.step_2 {
+	width: 70px;
+	overflow: hidden;
+}
+
+.text_zag.update_to_small.addition_to_phone.left.step_2 span {
+	margin-left: 12px;
+}
+
+.field_usl.update_to_small.addition_to_phone.right.step_2, .field_usl2.update_to_small.addition_to_phone.right.step_2 {
+	width: 70px;
+	overflow: hidden;
+	
+}
+
+.field_usl.update_to_small.addition_to_phone.right.step_2 span, .field_usl2.update_to_small.addition_to_phone.right.step_2 span{
+	text-align: left;
+}
+
+
+
+.floating.fixed {
+	position: fixed;
+	z-index: 999;
+	top: 50px!important;
+}
+
+div+.nomargin {
+	margin-top: -20px!important;
+	margin-bottom: 15px!important;
 }

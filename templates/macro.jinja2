@@ -132,7 +132,8 @@
             <div class="control_block">
                 <div class="control_center">
                     {% if page > 1 %}
-                        <button class="left">
+                        <button class="left"
+                                onclick="set_get_param('page', '{{ page - 1 }}')">
 
                         </button>
                     {% endif %}
@@ -146,7 +147,8 @@
                         {% endfor %}
                     </div>
                     {% if page < pages %}
-                        <button class="right">
+                        <button class="right"
+                                onclick="set_get_param('page', '{{ page + 1 }}')">
 
                         </button>
                     {% endif %}

@@ -6,6 +6,9 @@
 
 {% block content %}
     <div class="come_back">
+        <button data-href="{{ url_for("clients_import_random_list") }}">
+            Загрузить файл
+        </button>
         <button data-href="{{ url_for("clients_import") }}">
             Импортировать базу
         </button>

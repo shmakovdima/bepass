@@ -66,8 +66,31 @@
             return ids;
         };
 
-        var append_clients = function (all) {
-            var ids = checked_ids();
+        var append_clients = function (all, confirmed) {
+            var ids;
+            if (all){
+                ids = 'all';
+                if (!confirmed) {
+                    swal(
+                            {
+                                title: "Вы уверены?",
+                                text: "Добавить всех клиентов к шаблону?",
+                                type: "warning",
+                                showCancelButton: true,
+                                confirmButtonColor: "#DD6B55",
+                                confirmButtonText: "Да, добавить",
+                                cancelButtonText: "Нет, не добавлять",
+                                closeOnConfirm: true
+                            },
+                            function () {
+                                append_clients('all', true);
+                            }
+                    );
+                    return;
+                }
+            } else {
+                ids = checked_ids();
+            }
             $.post(
                     '{{ url_for('clients_append', template_id=template_id) }}',
                     {
