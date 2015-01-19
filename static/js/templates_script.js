@@ -1,6 +1,5 @@
 var metas = document.getElementsByTagName('meta');
 var i;
-
 var itemzap = 0;
 
 jQuery(function ($) {
@@ -74,12 +73,11 @@ var card = {
 
             $('.bind-logo').html('<img src = "' + this.logo + '" >');
             $('.bind-logo img').css({'background-image': 'url("' + this.logo + '")'});
-			$(".inner_head .image_wrapper img").each(function(){
-				var curh = $(this).height();
-				
+			$(".inner_head .image_wrapper img").bindImageLoad(function () {
+        		var curh = $(this).height();
 				$(this).css("margin-top",((50-curh)/2)+"px");
 				$(".logo_wrapper .image_wrapper img").css("margin-top",((50-curh)/2)+"px");;
-			});
+    		});
         }
 
         if ($('.bind-strip img').attr('src') != this.strip &&
@@ -95,10 +93,16 @@ var card = {
 
             $('.bind-notifications-icon').html('<img src = "' + this.notifications_icon + '" >');
             $('.bind-notifications-icon img').css({'background-image': 'url("' + this.notifications_icon + '")'});
-			$('.bind-notifications-icon img').each(function(){
-				var curh = $(this).height();
-				$('.bind-notifications-icon img').css("margin-top",((56-curh)/2)+"px");
+			
+			$('.bind-notifications-icon img').bindImageLoad(function () {
+				setTimeout(function () {
+					var curh = $('.bind-notifications-icon img').height();
+					
+					$('.bind-notifications-icon img').css("margin-top",((56-curh)/2)+"px");
+				}, 200); // значение паузы взял из головы
+				
 			});
+		
         }
 
 
@@ -361,12 +365,15 @@ function initSecondStep() {
 
     $('.logo_input').change(handleFileSelect('logo'));
     $('.strip_input').change(handleFileSelect('strip'));
-	$(".inner_head .image_wrapper img").each(function(){
-				var curh = $(this).height();
-				
+	
+	
+	$(".inner_head .image_wrapper img").bindImageLoad(function () {
+		var curh = $(this).height();	
 				$(this).css("margin-top",((50-curh)/2)+"px");
-				$(".logo_wrapper .image_wrapper img").css("margin-top",((50-curh)/2)+"px");;
+				$(".logo_wrapper .image_wrapper img").css("margin-top",((50-curh)/2)+"px");
+		
 	});
+	
 }
 
 function removezap(lat, lng, item) {
@@ -472,7 +479,7 @@ function initFirstStep() {
             card.set('confirm', $('#confirm_input').prop('checked'));
         }, 0);
     });
-	$(".inner_head .image_wrapper img").each(function(){
+	$(".inner_head .image_wrapper img").bindImageLoad(function () {
 				var curh = $(this).height();
 			
 				$(this).css("margin-top",((50-curh)/2)+"px");
@@ -522,7 +529,7 @@ function initFinishStep() {
 
 
 
-$(document).ready(function () {
+$(window).load(function () {
 	
 		$('#bg_color_input').iris({
         width: 132,
@@ -656,7 +663,6 @@ $(document).ready(function () {
 		}	
 		$(".hidden").fadeIn();
 		$(".save_point").fadeIn();
-      
     });
 
     $(".delcur").on("click", function (event) {
@@ -727,3 +733,34 @@ $(function(){
   else $('.floating').removeClass('fixed');
  });
 });
+
+(function ($) {
+    $.fn.bindImageLoad = function (callback) {
+        function isImageLoaded(img) {
+            // Во время события load IE и другие браузеры правильно
+            // определяют состояние картинки через атрибут complete.
+            // Исключение составляют Gecko-based браузеры.
+            if (!img.complete) {
+                return false;
+            }
+            // Тем не менее, у них есть два очень полезных свойства: naturalWidth и naturalHeight.
+            // Они дают истинный размер изображения. Если какртинка еще не загрузилась,
+            // то они должны быть равны нулю.
+            if (typeof img.naturalWidth !== "undefined" && img.naturalWidth === 0) {
+                return false;
+            }
+            // Картинка загружена.
+            return true;
+        }
+
+        return this.each(function () {
+            var ele = $(this);
+            if (ele.is("img") && $.isFunction(callback)) {
+                ele.one("load", callback);
+                if (isImageLoaded(this)) {
+                    ele.trigger("load");
+                }
+            }
+        });
+    };
+})(jQuery);
