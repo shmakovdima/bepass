@@ -73,13 +73,15 @@ var card = {
 
             $('.bind-logo').html('<img src = "' + this.logo + '" >');
             $('.bind-logo img').css({'background-image': 'url("' + this.logo + '")'});
-
+			$('.bind-logo img').css({'background-postiton': 'center center'})
+			
 			$(".inner_head .image_wrapper img").bindImageLoad(function () {
-				setTimeout(function () {
+				setTimeout(function () {	
 					var curh = $(".inner_head .image_wrapper img").height();
-				
+					
+					
 					$(".inner_head .image_wrapper img").css("margin-top",((50-curh)/2)+"px");
-					$(".logo_wrapper .image_wrapper img").css("margin-top",((56-curh)/2)+"px");					
+					//$('.bind-logo img').css("margin-top",((56-curh)/2)+"px");					
 				}, 200); // значение паузы взял из головы 		
     		});
         }
@@ -95,7 +97,7 @@ var card = {
             $('.bind-notifications-icon img').css('background-image') != 'url("' + this.notifications_icon + '")') {
 
             $('.bind-notifications-icon').html('<img src = "' + this.notifications_icon + '" >');
-            $('.bind-notifications-icon img').css({'background-image': 'url("' + this.notifications_icon + '")'});
+            //$('.bind-notifications-icon img').css({'background-image': 'url("' + this.notifications_icon + '")'});
 			
 			$('.bind-notifications-icon img').bindImageLoad(function () {
 				setTimeout(function () {
