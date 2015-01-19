@@ -73,10 +73,14 @@ var card = {
 
             $('.bind-logo').html('<img src = "' + this.logo + '" >');
             $('.bind-logo img').css({'background-image': 'url("' + this.logo + '")'});
+
 			$(".inner_head .image_wrapper img").bindImageLoad(function () {
-        		var curh = $(this).height();
-				$(this).css("margin-top",((50-curh)/2)+"px");
-				$(".logo_wrapper .image_wrapper img").css("margin-top",((50-curh)/2)+"px");;
+				setTimeout(function () {
+					var curh = $(".inner_head .image_wrapper img").height();
+				
+					$(".inner_head .image_wrapper img").css("margin-top",((50-curh)/2)+"px");
+					$(".logo_wrapper .image_wrapper img").css("margin-top",((56-curh)/2)+"px");					
+				}, 200); // значение паузы взял из головы 		
     		});
         }
 
@@ -87,7 +91,6 @@ var card = {
             $('.bind-strip img').css({'background-image': 'url("' + this.strip + '")'});
         }
 
-
         if ($('.bind-notifications-icon img').attr('src') != this.notifications_icon &&
             $('.bind-notifications-icon img').css('background-image') != 'url("' + this.notifications_icon + '")') {
 
@@ -97,15 +100,12 @@ var card = {
 			$('.bind-notifications-icon img').bindImageLoad(function () {
 				setTimeout(function () {
 					var curh = $('.bind-notifications-icon img').height();
-					
 					$('.bind-notifications-icon img').css("margin-top",((56-curh)/2)+"px");
 				}, 200); // значение паузы взял из головы
 				
 			});
 		
         }
-
-
         (this.confirm) ? $('.bind-confirm').show() : $('.bind-confirm').hide();
     },
     set: function (key, value) {
@@ -368,9 +368,12 @@ function initSecondStep() {
 	
 	
 	$(".inner_head .image_wrapper img").bindImageLoad(function () {
-		var curh = $(this).height();	
-				$(this).css("margin-top",((50-curh)/2)+"px");
-				$(".logo_wrapper .image_wrapper img").css("margin-top",((50-curh)/2)+"px");
+		setTimeout(function () {
+			var curh = $(".inner_head .image_wrapper img").height();	
+			$(".inner_head .image_wrapper img").css("margin-top",((50-curh)/2)+"px");
+			$(".logo_wrapper .image_wrapper img").css("margin-top",((56-curh)/2)+"px");		
+		}, 200); // значение паузы взял из головы
+		
 		
 	});
 	
@@ -480,10 +483,15 @@ function initFirstStep() {
         }, 0);
     });
 	$(".inner_head .image_wrapper img").bindImageLoad(function () {
-				var curh = $(this).height();
+		setTimeout(function () {
+				var curh = $(".inner_head .image_wrapper img").height();						
+				$(".inner_head .image_wrapper img").css("margin-top",((50-curh)/2)+"px");
+				$(".logo_wrapper .image_wrapper img").css("margin-top",((56-curh)/2)+"px");		
+		}, 200); // значение паузы взял из головы
+		
+		
+				
 			
-				$(this).css("margin-top",((50-curh)/2)+"px");
-				$(".logo_wrapper .image_wrapper img").css("margin-top",((50-curh)/2)+"px");;
 	});
 }
 function initFinishStep() {
@@ -530,6 +538,8 @@ function initFinishStep() {
 
 
 $(window).load(function () {
+	
+			
 	
 		$('#bg_color_input').iris({
         width: 132,
